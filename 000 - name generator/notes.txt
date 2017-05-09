@@ -1,0 +1,18 @@
+//  - what does declaring, and initialization mean?
+//  - What does const do?
+//  - Why use const with c-style strings?
+//  - can c++ arrays resize at runtime?
+//  - How do you delcare a variable?
+//  - how do you declare a static/dynamic variable?
+//  - what libraries are required to interact with strings?
+//  - are there advantages to using c-style strings?
+//  - how is the value of rand() generated?
+//  - why explicit typecast?
+//  - What does the time(0) function do?
+//  - do you need to continually seed? Or only seed once?
+//  - How do I declare and use vectors?
+//  - how to functionally determine length of a string?
+//  - what does rand return?
+//  - What's the purpose of RAND_MAX being available?
+//  - what does the time(0) function return? Format?
+//  - how does cout print c-style strings?
