@@ -1,16 +1,17 @@
 #include "Date.h"
 #include <iostream>
+#include "Birthdate.h"
 
 int main()
 {
   int day = 0, month = 0, year = 0;
-  // grab user birthday. Ask user to input numbers representing the date in dd/mm/yyyy format
-  std::cout << "Enter your birthday as three numbers and get your age in seconds!\n Enter in form of: dd/mm/yyyy" << std::endl;
+  // grab user Birthdate. Ask user to input numbers representing the date in dd/mm/yyyy format
+  std::cout << "Enter your Birthdate as three numbers and get your age in seconds!\n Enter in form of: dd/mm/yyyy" << std::endl;
   std::cin >> day >> month >> year;
   
-  Birthday *birthday = new Birthday(day, month, year);
+  Birthdate *birthdate = new Birthdate(day, month, year);
 
-  long long int ageInSeconds = birthday->giveAgeInSeconds();
+  long long int ageInSeconds = birthdate->giveAgeInSeconds();
   std::cout << "age in seconds: " << ageInSeconds << std::endl;
   // guard each month against number of allowed days
 
