@@ -12,15 +12,18 @@ int main() {
 
   srand( time(0) );
   randomInt = rand() * RAND_MAX % maxNumber;
+  std::cout << randomInt << std::endl;
 
   // prompt user for guess and print feedback
-  std::cout << "Guess a number from 0 to 100. I'll tell you if you're higher or lower!\n";
+  std::cout << "Guess a number from 0 to 100. I'll tell you if the desired number is higher or lower!\n";
   do {
     std::cin >> userGuess;
-    if (userGuess > randomInt)
+    if (randomInt > userGuess)
       std::cout << "Higher\n";
-    else if (userGuess < randomInt)
+    else if (randomInt < userGuess )
       std::cout << "Lower\n";
+    else
+      break;
   } while(userGuess != randomInt);
 
   std::cout << "You guessed right!";
