@@ -3,20 +3,29 @@
 #include "encrypt.cpp"
 #include "decrypt.cpp"
 
+
+// purpose: receive user input, and XOR encrypt it!
 int main()
 {
-  std::string user_input;
-  // let's use getline(), as it reliably feeds us a string.
-  std::cout << "Please enter something to encrypt!" << std::endl;
-  std::getline(std::cin, user_input);
+  char user_key_char = '\0';
+  std::string user_data = "";
+  std::string user_key = "";
 
-  std::cout << user_input.size() << std::endl;
+  // ask user string
+  std::cout << "Please enter something to encrypt!: ";
+  std::getline(std::cin, user_data); // let's use getline(), reliable userinput
 
-  std::cout << "Your input: " << user_input << std::endl;
-
-  MyEncrypter::encryptString(user_input);
-  std::cout << "Encrypted form: " << user_input << std::endl;
-
-  MyDecrypter::decryptString(user_input);
-  std::cout << "Decoded to: " << user_input << std::endl;
+  // ask for user input
+  while (user_key.size() != 1) {
+    std::cout << "Please enter a single key to encrypt with: ";
+    std::getline(std::cin, user_key);
+  }
+  user_key_char = user_key[0];
+  
+  // encrypt
+  MyEncrypter::encryptString(user_data, user_key_char);
+  std::cout << "Encrypted form: " << user_data << std::endl;
+  // decrypt
+  MyDecrypter::decryptString(user_data, user_key_char);
+  std::cout << "Decoded to: " << user_data << std::endl;
 }
