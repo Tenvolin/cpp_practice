@@ -2,6 +2,7 @@
 #include <time.h>
 #include <string>
 #include <cstdio>
+
 // purpose: determine if user or opponent wins.
 // output: 0=lose; 1=win; 2=tie;
 unsigned gameLogic(unsigned user, unsigned opponent)
