@@ -19,11 +19,24 @@ Hangman::Hangman()
   this->word_ = word;
   this->current_index_ = 0;
   this->char_indices_map_ = generateCharIndicesMap(this->word_);
+  
+  // initialize revealed_
+  this->revealed_ = this->word_;
+  for (char &c: this->revealed_)
+  {
+    c = '_';
+  }
+
 }
+
+
 Hangman::~Hangman()
 {
 }
 
+
+/* purpose: Convert the chosen word to constituent chars and the indices
+ *          they exist on. */
 map<char, vector<int>> Hangman::generateCharIndicesMap(string word)
 {
   // create map.
@@ -46,40 +59,42 @@ map<char, vector<int>> Hangman::generateCharIndicesMap(string word)
     }
     else // insert into existing vector
     {
-      vector<int> &indices_ref = char_map.at(c);
-      indices_ref.push_back(i);
+      vector<int> &indices_index = char_map.at(c);
+      indices_index.push_back(i);
     }
   }
 
   return char_map;
 }
 
-// purpose: Have user make guess. Returns numbers representing results and
-//          game state.
-// TODO: Add capability to guess entire word; more than one char; manager fulfill.
-// TODO: Choose to overload and receive a string or receive a character.
-// in: c: character used to guess current word;
-// out: 0 -> dead; 1 -> finished game; 2 -> incorrect guess; 3 -> correct guess;
+
+/* TODO: Choose to overload and receive a string or receive a character.
+ * purpose: Have user make guess. Returns numbers representing results and
+ *          game state.
+ * in: c: character used to guess current word;
+ * out: 0 -> dead; 1 -> finished game; 2 -> incorrect guess; 3 -> correct guess;*/
 int Hangman::guess(char guess)
 {
   int answer = 0;
+  vector<int> results;
+  map<char, vector<int>> &char_indices_map = this->char_indices_map_;
+  auto it = char_indices_map.find(guess);
 
-  // Increment or decrement life and determine correctness of guess.
   if (this->life_ > 0)
   {
-    char compare = this->word_[this->current_index_];
-    if (guess == compare)
+    if (it != char_indices_map.end()) // Correct guess.
     {
-      ++this->current_index_; // Will exceed allowed index in WIN state.
-      (this->current_index_ == this->word_.size()) ? answer = WIN : answer = CORRECT;
+      updateRevealed(it->first, it->second);
+      (this->word_ == this->revealed_) ? answer = WIN : answer = CORRECT;
     }
-    else
+    else // Wrong guess.
     {
-      --this->life_;
+      // check if we become dead; else return INCORRECT.
+      --this->life_; 
       (this->life_ <= 0) ? answer = LOSS : answer = INCORRECT;
     }
   }
-  else // Life < 0. Game over. Needs a reset
+  else // state: dead
   {
     answer = LOSS;
   }
@@ -87,43 +102,55 @@ int Hangman::guess(char guess)
   return answer;
 }
 
-void Hangman::printCorrectlyGuessed()
+
+/* purpose: Update indices of our masked word with the letter.
+ * in: c: individual chars. Indices: represent indices in which a char exists.*/
+void Hangman::updateRevealed(char c, vector<int> indices)
 {
-  // int print_to = this->current_index_;
-  // std::string word = this->word_;
-  // for (int i = 0; i < current_index_; i++)
-  // {
-  //   std::cout << word[i];
-  // }
-  // std::cout << std::endl;
+  for (auto index : indices)
+  { 
+    this->revealed_[index] = c;
+  }
 }
 
+
+/* purpose: Print current guess status. Chosen word is initialized with _'s
+ *          in the place of each letter; each letter is unmasked with guesses.*/
+void Hangman::printCorrectlyGuessed()
+{
+  std::cout << this->revealed_ << std::endl;
+}
+
+
+/* purpose: Print each character with indices they exist on.*/
 void Hangman::printCharMapSummary()
 {
   auto charMap = this->getCharMap();
   for (auto it = charMap.begin(); it != charMap.end(); ++it)
   {
     std::cout << it->first << "-indices: ";
-    for (auto &ref : it->second)
+    for (auto &index : it->second)
     {
-      std::cout << ref << '.';
+      std::cout << index << '.';
     }
     std::cout << std::endl;
   }
 }
+
 
 std::string Hangman::getWord()
 {
   return this->word_;
 }
 
+
 int Hangman::getLife()
 {
   return this->life_;
 }
 
+
 map<char, vector<int>> Hangman::getCharMap()
 {
   return this->char_indices_map_;
 }
-

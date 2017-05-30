@@ -28,17 +28,20 @@ private:
   string word_;
   string revealed_; // all _'s representing the masked word.
   unsigned current_index_; // current_index_ is not revealed(guessed correctly) yet.
-  unsigned life_;
-  map<char, vector<int>> char_indices_map_;
-  
+  unsigned life_; // number of guesses remaining.
+  // The map holds chars mapped to indices.
+  map<char, vector<int>> char_indices_map_; 
+
   map<char, vector<int>> generateCharIndicesMap(string word);
-public:
-  int guess(char c);
-  int getLife();
-  string getWord();
-  void printCorrectlyGuessed();
+  void updateRevealed(char c, vector<int> indices);
   map<char, vector<int>> getCharMap();
   void printCharMapSummary();
+
+public:
+  int getLife();
+  string getWord();
+  int guess(char c);
+  void printCorrectlyGuessed();
   
   Hangman();
   ~Hangman();
