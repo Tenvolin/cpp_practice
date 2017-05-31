@@ -16,18 +16,15 @@ int main()
   {
     // Print guesses remaining and guess status of current word.
     cout << "You have " << game.getLife() << " guesses remaining." << endl;
-
     game.printCorrectlyGuessed();
-    // Receive single-char user input.
-    do
-    {
-      cout << "Please guess a character:";
-      cin >> input;
-    } while (input.size() != 1);
-    // Pompt user guess and provide feedback.
-    game_state = game.guess(input[0]);
-    // Clear screen and display results.
-    system("CLS"); 
+
+    // Read input and process
+    cout << "Please guess a character, or a word: ";
+    cin >> input;
+    game_state = game.guess(input);
+
+    // Clear screen and update user on status.
+    system("CLS");
     if (game_state == CORRECT)
       cout << "You guessed the right letter!" << endl;
     else if (game_state == INCORRECT)
@@ -35,7 +32,7 @@ int main()
   }
 
   system("CLS");
-  game.printCorrectlyGuessed();
+  game.printWord();
 
   if (game_state == LOSS)
     cout << "You lost the game!" << endl;
