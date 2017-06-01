@@ -15,8 +15,8 @@ const int CORRECT = 3;
 const int BIG_NUMBER = 2253;
 // general constants
 const unsigned NUM_GUESSES = 10;
-const unsigned WORDBANK_SIZE = 5;
-const string WORDBANK[WORDBANK_SIZE] = {"hello", "dog", "god", "meme", "dumb"};
+const unsigned WORDBANK_SIZE = 9;
+const string WORDBANK[WORDBANK_SIZE] = {"hello", "dog", "god", "meme", "dumb", "jazz", "help", "fuzz", "hangman"};
 
 /* purpose: Represents a hangman game. Holds the state of game. Each game
  *          Has a allotted number of guesses.

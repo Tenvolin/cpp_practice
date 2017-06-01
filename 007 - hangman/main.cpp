@@ -19,16 +19,17 @@ int main()
     game.printCorrectlyGuessed();
 
     // Read input and process
-    cout << "Please guess a character, or a word: ";
+    cout << "Please guess a character or word: ";
     cin >> input;
     game_state = game.guess(input);
 
     // Clear screen and update user on status.
+    // TODO: Update on single char or entire guess.
     system("CLS");
     if (game_state == CORRECT)
-      cout << "You guessed the right letter!" << endl;
+      cout << "You guessed correctly!" << endl;
     else if (game_state == INCORRECT)
-      cout << "You guessed the wrong letter!" << endl;
+      cout << "You guessed incorrectly!" << endl;
   }
 
   system("CLS");

@@ -1,4 +1,5 @@
 #include "hangmangame.h"
+#include <cstdlib>
 #include <ctime>
 #include <map>
 #include <vector>
@@ -9,11 +10,14 @@ using std::string;
 using std::map;
 using std::vector;
 
+/* purpose: Initializes game. A single object represents a game.  
+ */
 Hangman::Hangman()
 {
-  // roll rand index on [0, WORDBANK_SIZE] and choose word.
-  unsigned long rand_index = (time(0) * BIG_NUMBER) % WORDBANK_SIZE;
-  std::string word = WORDBANK[rand_index];
+  std::srand(time(0));
+  // roll rand index on [0, WORDBANK_SIZE) and choose word.
+  unsigned long rand_index = rand() % WORDBANK_SIZE;
+  string word = WORDBANK[rand_index];
 
   this->life_ = NUM_GUESSES;
   this->word_ = word;
@@ -37,19 +41,19 @@ Hangman::~Hangman()
  */
 map<char, vector<int>> Hangman::generateCharIndicesMap(string word)
 {
-  // create map.
+  // Create map.
   char c = '\0';
   map<char, vector<int>> char_map;
   map<char, vector<int>>::iterator it;
 
-  // for loop; iterate over string.
+  // Iterate over string and check if each char exists.
   for (int i = 0; i < word.size(); ++i)
   {
     c = word[i];
-    // check if char exists.
     it = char_map.find(c);
-
-    if (it == char_map.end()) // create new pair and insert
+    
+    // Encounter new char: create new pair and create list of indices.
+    if (it == char_map.end()) 
     {
       vector<int> indices;
       indices.push_back(i);
