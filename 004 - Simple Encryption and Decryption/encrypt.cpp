@@ -11,8 +11,7 @@ public:
 // in: out_input
 void MyEncrypter::encryptString(std::string &input, char encryptKey)
 {
-  for (int i = 0; i < input.size(); ++i)
-  {
+  for (int i = 0; i < input.size(); ++i) {
      input[i] = input[i] ^ encryptKey;
   }
 }

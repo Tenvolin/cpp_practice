@@ -30,15 +30,13 @@ long long Birthdate::giveAgeInSeconds()
   long long seconds_elapsed_in_life = 0;
 
   // give days passed in current year. range: [1, this->month_)
-  for (int i = 1; i < this->month_; i++)
-  {
+  for (int i = 1; i < this->month_; i++) {
     days_in_current_year = this->daysInMonth(i, this->year_);
   }
   days_in_current_year += this->day_;
 
   // give sum of days for each year before current year.
-  for (int year = this->year_; year < CURRENT_YEAR; year++)
-  {
+  for (int year = this->year_; year < CURRENT_YEAR; year++) {
     if (this->isLeapYear(year))
       days_prior_to_current_year += days_in_leapyear;
     else
@@ -60,8 +58,7 @@ bool Birthdate::isLeapYear(int year)
   bool is_leap_year = false;
 
   if (year % 4 == 0 && year % 100 != 0 ||
-      year % 400 == 0)
-  {
+      year % 400 == 0) {
     is_leap_year = true;
   }
 
@@ -100,23 +97,16 @@ int Birthdate::daysInMonth(int month, int year)
   // check if bday->day exists on allowed dates per month; e.g. [0, 31] or [0, 30]
   //    Consider February Leap years.
   if (current_month == 1 || current_month == 3 || current_month == 5 || current_month == 7 ||
-      current_month == 8 || current_month == 10 || current_month == 12)
-  {
+      current_month == 8 || current_month == 10 || current_month == 12) {
     days_in_month = 31;
-  }
-  else if (current_month == 4 || current_month == 6 || current_month == 9 || current_month == 11)
-  {
+  } else if (current_month == 4 || current_month == 6 || current_month == 9 || current_month == 11) {
     days_in_month = 30;
-  }
-  else if (current_month == 2)
-  {
+  } else if (current_month == 2) {
     if (isLeapYear(year))
       days_in_month = 29;
     else
       days_in_month = 28;
-  }
-  else
-  {
+  } else {
     // error: invalid month given
     days_in_month = -1;
   }

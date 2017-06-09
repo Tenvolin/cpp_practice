@@ -14,8 +14,7 @@ int main()
 
   char answer[255];
   std::srand((unsigned)time(0));
-  do
-  {
+  do {
     // generate random integer that ranges all valid indices of your array of strings
     //  and seed rand
     randInt = std::rand() % numNames;
