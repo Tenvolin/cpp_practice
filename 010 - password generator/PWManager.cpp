@@ -45,7 +45,7 @@ int PWManager::length(int length)
 {
   int answer;
   (length < 0) ? answer = -1 : answer = 1;
-  
+
   this->pw_length_ = length;
   return answer;
 }
@@ -53,7 +53,6 @@ int PWManager::length(int length)
 /* PURPOSE: 
  * INPUT: 
 */
-void getUserInput(int user_option) 
+void getUserInput(int user_option)
 {
-
 }

@@ -12,8 +12,7 @@ int main()
   std::string input = "";
   int game_state = -1;
 
-  while (game_state != LOSS && game_state != WIN)
-  {
+  while (game_state != LOSS && game_state != WIN) {
     // Print guesses remaining and guess status of current word.
     cout << "You have " << game.getLife() << " guesses remaining." << endl;
     game.printCorrectlyGuessed();
@@ -30,6 +29,7 @@ int main()
       cout << "You guessed correctly!" << endl;
     else if (game_state == INCORRECT)
       cout << "You guessed incorrectly!" << endl;
+      
   }
 
   system("CLS");

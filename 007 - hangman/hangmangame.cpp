@@ -26,10 +26,10 @@ Hangman::Hangman()
 
   // initialize revealed_
   this->revealed_ = this->word_;
-  for (char &c : this->revealed_)
-  {
+  for (char &c : this->revealed_) {
     c = '_';
   }
+
 }
 
 Hangman::~Hangman()
@@ -47,23 +47,20 @@ map<char, vector<int>> Hangman::generateCharIndicesMap(string word)
   map<char, vector<int>>::iterator it;
 
   // Iterate over string and check if each char exists.
-  for (int i = 0; i < word.size(); ++i)
-  {
+  for (int i = 0; i < word.size(); ++i) {
     c = word[i];
     it = char_map.find(c);
     
     // Encounter new char: create new pair and create list of indices.
-    if (it == char_map.end()) 
-    {
+    if (it == char_map.end()) {
       vector<int> indices;
       indices.push_back(i);
       char_map.emplace(c, indices);
-    }
-    else // insert into existing vector
-    {
+    } else { // insert into existing vector
       vector<int> &indices_index = char_map.at(c);
       indices_index.push_back(i);
     }
+
   }
 
   return char_map;
@@ -78,17 +75,12 @@ int Hangman::guess(string guess)
 {
   int answer = 0;
 
-  if (this->life_ > 0 && guess.size() > 1) // Guess entire word.
-  {
+  if (this->life_ > 0 && guess.size() > 1) { // Guess entire word.
     this->guess_word_helper(guess, answer);
     std::cout << "Answer " << answer << std::endl;
-  }
-  else if (this->life_ > 0 && guess.size() == 1) // Guess single char.
-  {
+  } else if (this->life_ > 0 && guess.size() == 1) { // Guess single char.
     this->guess_char_helper(guess[0], answer);
-  }
-  else // state: LOSS
-  {
+  } else { // state: LOSS
     answer = LOSS;
   }
 
@@ -106,13 +98,10 @@ void Hangman::guess_char_helper(char guess_char, int &answer)
   map<char, vector<int>> &char_indices_map = this->char_indices_map_;
   auto it = char_indices_map.find(guess_char);
 
-  if (it != char_indices_map.end()) // Correct guess.
-  {
+  if (it != char_indices_map.end()) { // Correct guess.
     updateRevealed(it->first, it->second);
     (this->word_ == this->revealed_) ? answer = WIN : answer = CORRECT;
-  }
-  else // Wrong guess.
-  {
+  } else { // Wrong guess. 
     // check if we become dead; else return INCORRECT.
     --this->life_;
     (this->life_ <= 0) ? answer = LOSS : answer = INCORRECT;
@@ -135,8 +124,7 @@ void Hangman::guess_word_helper(string guess, int &answer)
  * in: c: individual chars. Indices: represent indices in which a char exists.*/
 void Hangman::updateRevealed(char c, vector<int> indices)
 {
-  for (auto index : indices)
-  {
+  for (auto index : indices) {
     this->revealed_[index] = c;
   }
 }
@@ -157,11 +145,11 @@ void Hangman::printWord()
 void Hangman::printCharMapSummary()
 {
   auto charMap = this->getCharMap();
-  for (auto it = charMap.begin(); it != charMap.end(); ++it)
-  {
+  for (auto it = charMap.begin(); it != charMap.end(); ++it) {
+
     std::cout << it->first << "-indices: ";
-    for (auto &index : it->second)
-    {
+    
+    for (auto &index : it->second) {
       std::cout << index << '.';
     }
     std::cout << std::endl;

@@ -11,11 +11,13 @@ int calculate_love(std::string name1, std::string name2)
   int sum1 = 0, sum2 = 0;
   int product = 1;
   
-  for (int ascii : name1)
+  for (int ascii : name1) {
     sum1 += ascii;
-  for (int ascii : name2)
+  }
+  for (int ascii : name2) {
     sum2 += ascii;
-  
+  }
+
   product = sum1 * sum2;
   
   product %= 100;
