@@ -11,8 +11,9 @@
 int main()
 {
   int user_option = 0;
-  printf("Welcome to password generator!");
+  printf("Welcome to password generator!\n");
   do {
+    printf("Please Enter a number:");
     getUserInput(user_option);
 
     printf(
@@ -21,12 +22,13 @@ int main()
         "\t numbers\n"
         "\t lowercase\n"
         "\t uppercase\n"
-        "\t pw_length\n");
+        "\t pw_length\n\n");
 
     printf(
         "1: Change settings.",
-        "2: ");
+        "2: "
+        "\n" );
 
-  } while (user_option != 5);
+  } while (user_option > 5);
   
 }

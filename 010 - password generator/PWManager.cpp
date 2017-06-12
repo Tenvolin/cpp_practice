@@ -1,6 +1,7 @@
 #include <iostream>
 #include "PWManager.h"
 #include <vector>
+#include <string>
 
 /* PURPOSE: Class containing members that correspond to character maps. If a 
 *  member is true, the corresponding character set will be available to roll for.
@@ -50,9 +51,28 @@ int PWManager::length(int length)
   return answer;
 }
 
-/* PURPOSE: 
- * INPUT: 
+/* PURPOSE: Assign value
+ * INPUT: _IN_ user_option
 */
-void getUserInput(int user_option)
+void getUserInput(int &user_option)
 {
+  std::string input_str;
+  bool allDecimal = true;
+
+  // Receive user input and ensure decimals only in input_str.
+  do {
+    allDecimal = true;
+    getline(std::cin, input_str);
+
+    // loop if not all characters  
+    for (char c : input_str) {
+      if (c < 48 || c > 57) {
+        allDecimal = false;
+        break;
+      }
+    }
+  } while(!allDecimal);
+
+  user_option = std::stoi(input_str); 
+  std::cout << "MEME HERE: " << user_option << std::endl; 
 }

@@ -17,16 +17,17 @@ private:
   bool numbers_;
   bool lower_case_;
   bool upper_case_;
-
   unsigned pw_length_;
-
+  // functions
   std::vector<unsigned> OptionsToRoll();
 
 public:
   int length(int length);
+  
 
   PWManager();
   ~PWManager();
 };
 
+void getUserInput(int &user_option);
 #endif // PASSWORD_MANAGER
