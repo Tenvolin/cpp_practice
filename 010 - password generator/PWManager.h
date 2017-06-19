@@ -40,7 +40,6 @@ private:
   // functions
   vector<unsigned> optionsToRoll();
   int initCharRanges(); 
-  char randChar();
   
   
 public:
@@ -50,7 +49,8 @@ public:
   bool lower();
   bool upper();
   unsigned length();
-
+  char randChar();
+  
   PWManager();
   ~PWManager();
 };

@@ -18,6 +18,8 @@ PWManager::PWManager()
   initCharRanges();
 }
 
+PWManager::~PWManager() {}
+
 /* PURPOSE: Loop through PWManager members and determine what character sets are
  * to be used for password generation.
  * OUTPUT: Vector containing all true members for pw generation.
