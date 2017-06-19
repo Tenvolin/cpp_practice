@@ -29,6 +29,7 @@ int main()
         "2: "
         "\n" );
 
-  } while (user_option > 5);
+
+  } while (user_option < 0 || user_option > 5);
   
 }

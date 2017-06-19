@@ -10,12 +10,12 @@ PWManager::PWManager()
 {
   this->symbols_ = true;
   this->numbers_ = true;
-  this->lower_case_ = true;
-  this->upper_case_ = true;
-  this->pw_length_ = PW_LENGTH;
+  this->lower_ = true;
+  this->upper_ = true;
+  this->length_ = PW_LENGTH;
 }
 
-/* PURPOSE: Loop through PWManager members and determine what chracter sets are
+/* PURPOSE: Loop through PWManager members and determine what character sets are
  * to be used for password generation.
  * OUTPUT: Vector containing all true members for pw generation.
 */
@@ -28,9 +28,9 @@ std::vector<unsigned> PWManager::OptionsToRoll()
     vec.push_back(SYMBOLS);
   if (this->numbers_)
     vec.push_back(NUMBERS);
-  if (this->lower_case_)
+  if (this->lower_)
     vec.push_back(LOWER);
-  if (this->upper_case_)
+  if (this->upper_)
     vec.push_back(UPPER);
 
   return vec;
@@ -47,7 +47,7 @@ int PWManager::length(int length)
   int answer;
   (length < 0) ? answer = -1 : answer = 1;
 
-  this->pw_length_ = length;
+  this->length_ = length;
   return answer;
 }
 
@@ -74,5 +74,11 @@ void getUserInput(int &user_option)
   } while(!allDecimal);
 
   user_option = std::stoi(input_str); 
-  std::cout << "MEME HERE: " << user_option << std::endl; 
 }
+
+bool PWManager::symbols() { return this->symbols_;}
+bool PWManager::numbers() { return this->numbers_;}
+bool PWManager::lower() { return this->lower_;}
+bool PWManager::upper() { return this->upper_;}
+unsigned PWManager::length() { return this->length_;}
+
