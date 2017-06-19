@@ -15,6 +15,7 @@ PWManager::PWManager()
   this->lower_ = true;
   this->upper_ = true;
   this->length_ = PW_LENGTH;
+  initCharRanges();
 }
 
 /* PURPOSE: Loop through PWManager members and determine what character sets are
@@ -40,8 +41,7 @@ std::vector<unsigned> PWManager::optionsToRoll()
 
 /* PURPOSE: Set length of password.
  * INPUT: Int representing length.
- * OUTPUT:  Negative length outputs -1;
- *          Error outputs 0;
+ * OUTPUT:  Negative length outputs 0;
  *          No errors - proper set: 1.
 */
 int PWManager::length(int length)
@@ -54,7 +54,7 @@ int PWManager::length(int length)
 }
 
 /* PURPOSE: Assign value
- * INPUT: _IN_ user_option
+ * INPUT: user_option is an input parameter.
 */
 void getUserInput(int &user_option)
 {
@@ -82,43 +82,62 @@ void getUserInput(int &user_option)
  * NOTE: Might not need this fn at all; just for clarity's sake in code?
  *       Should it be defined as a const as opposed to creating on runtime?
  *       Might want to rename.
+ * TODO: Turn this into a compile-time task; vs runtime.
  */ 
 int PWManager::initCharRanges()
 {
-  // TODO: Implement and define return errors?
   // Seed time and fill in map of char_range
   srand(time(NULL));
-  
+  map<unsigned, char_range_vector> *map = &this->char_set_map_;
 
-  return -1;
+  char_range_vector symbols_vec;
+  char_range_vector numbers_vec;
+  char_range_vector lower_vec;
+  char_range_vector upper_vec;
+
+  symbols_vec.push_back(symbols_range1);
+  symbols_vec.push_back(symbols_range2);
+  symbols_vec.push_back(symbols_range3);
+  symbols_vec.push_back(symbols_range4);
+  numbers_vec.push_back(numbers_range);
+  lower_vec.push_back(lower_range);
+  upper_vec.push_back(upper_range);
+  
+  map->emplace(SYMBOLS, symbols_vec);
+  map->emplace(NUMBERS, numbers_vec);
+  map->emplace(LOWER, lower_vec);
+  map->emplace(UPPER, upper_vec);
+
+  return 1;
 }
 
 /* PURPOSE: Returns random character based on enabled character_sets.
  * OUTPUT: Randomly generated char.
- * NOTE: A char_set is mapped to a vector of char_ranges type.
- * TODO: Maybe helper to roll on char_set?
- * TODO: NEEDS A HELPER TO ROLL ON CHAR_RANGE.
+ * NOTE: char_range is a pair of ints; represents a series of ASCII chars.
+ *       char_set is a vector of char_ranges.
+ * LOGIC: ultimately, three random rolls are required to obtain a random char.
  * TODO: Is reusing a single rand() inappropriate? Possibly ruining distribution?
+ * TODO: Determine if any helpers are needed; seems simple enough and under 40 
+ *       lines.
  */
 char PWManager::randChar()
 {
+  int rand_index1, rand_index2, rand_index3; 
+  int rand_char;
   // Receive vector of possible char_sets.
   std::vector<unsigned> options = this->optionsToRoll();
 
-  // Roll random number on size of char_sets vector.
-  int rand_index = rand() * options.size(); // rand value on [0, options.size)
+  // Roll random char_set index.
+  rand_index1 = rand() * options.size(); // rand value on [0, options.size)
 
-  // Pick out a vector from map and roll on the size of this second_vector for 
-  //    a range.
-  char_range_vector pairs_list = this->char_set_map_[rand_index];
-
-  // Pick a random char_range.
-  int rand_index2 = rand() * pairs_list.size(); 
+  // Given a vector of char_ranges, Pick a random char_range.
+  char_range_vector pairs_list = this->char_set_map_[rand_index1];
+  rand_index2 = rand() * pairs_list.size(); 
   char_range rand_char_range = pairs_list[rand_index2];
 
   // roll random number on that char_range: [first, second)
   int distance = rand_char_range.second - rand_char_range.first;
-  int rand_char = rand_char_range.first + rand() * distance;
+  rand_char = rand_char_range.first + rand() * distance;
   
   return rand_char;  
 }

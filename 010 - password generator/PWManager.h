@@ -17,13 +17,14 @@ const unsigned LOWER = 2;
 const unsigned UPPER = 3;
 const unsigned PW_LENGTH = 16;
 
-// placeholder ranges for now
-const char_range symbols_range1(1,1);
-const char_range symbols_range2(1,1);
-const char_range symbols_range3(1,1);
-const char_range numbers_range(1, 1);
-const char_range lower_range(1, 1);
-const char_range upper_range(1, 1);
+// ASCII char ranges.
+const char_range symbols_range1(33,48);
+const char_range symbols_range2(58,65);
+const char_range symbols_range3(91,97);
+const char_range symbols_range4(123,127);
+const char_range numbers_range(48,58);
+const char_range lower_range(97,123);
+const char_range upper_range(65,91);
 
 class PWManager
 {
@@ -35,7 +36,7 @@ private:
   bool upper_;
   unsigned length_;
   // After rolling for a char_set, access map to roll again to determine ascii char
-  map<unsigned, char_range_vector > char_set_map_;
+  map<unsigned, char_range_vector> char_set_map_;
   // functions
   vector<unsigned> optionsToRoll();
   int initCharRanges(); 
