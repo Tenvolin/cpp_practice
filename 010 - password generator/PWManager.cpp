@@ -2,6 +2,8 @@
 #include "PWManager.h"
 #include <vector>
 #include <string>
+#include <map>
+#include <ctime>
 
 /* PURPOSE: Class containing members that correspond to character maps. If a 
 *  member is true, the corresponding character set will be available to roll for.
@@ -19,7 +21,7 @@ PWManager::PWManager()
  * to be used for password generation.
  * OUTPUT: Vector containing all true members for pw generation.
 */
-std::vector<unsigned> PWManager::OptionsToRoll()
+std::vector<unsigned> PWManager::optionsToRoll()
 {
   std::vector<unsigned> vec;
 
@@ -74,6 +76,51 @@ void getUserInput(int &user_option)
   } while(!allDecimal);
 
   user_option = std::stoi(input_str); 
+}
+
+/* PURPOSE: Load all character ranges into map and seeds RAND.
+ * NOTE: Might not need this fn at all; just for clarity's sake in code?
+ *       Should it be defined as a const as opposed to creating on runtime?
+ *       Might want to rename.
+ */ 
+int PWManager::initCharRanges()
+{
+  // TODO: Implement and define return errors?
+  // Seed time and fill in map of char_range
+  srand(time(NULL));
+  
+
+  return -1;
+}
+
+/* PURPOSE: Returns random character based on enabled character_sets.
+ * OUTPUT: Randomly generated char.
+ * NOTE: A char_set is mapped to a vector of char_ranges type.
+ * TODO: Maybe helper to roll on char_set?
+ * TODO: NEEDS A HELPER TO ROLL ON CHAR_RANGE.
+ * TODO: Is reusing a single rand() inappropriate? Possibly ruining distribution?
+ */
+char PWManager::randChar()
+{
+  // Receive vector of possible char_sets.
+  std::vector<unsigned> options = this->optionsToRoll();
+
+  // Roll random number on size of char_sets vector.
+  int rand_index = rand() * options.size(); // rand value on [0, options.size)
+
+  // Pick out a vector from map and roll on the size of this second_vector for 
+  //    a range.
+  char_range_vector pairs_list = this->char_set_map_[rand_index];
+
+  // Pick a random char_range.
+  int rand_index2 = rand() * pairs_list.size(); 
+  char_range rand_char_range = pairs_list[rand_index2];
+
+  // roll random number on that char_range: [first, second)
+  int distance = rand_char_range.second - rand_char_range.first;
+  int rand_char = rand_char_range.first + rand() * distance;
+  
+  return rand_char;  
 }
 
 bool PWManager::symbols() { return this->symbols_;}

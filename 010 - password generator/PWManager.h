@@ -17,18 +17,13 @@ const unsigned LOWER = 2;
 const unsigned UPPER = 3;
 const unsigned PW_LENGTH = 16;
 
-// After rolling for a char_set, dig into map to roll again to determine 
-// ascii char.
-const map<unsigned, char_range_vector > MAP_OF_CHAR_SETS;
-
-
 // placeholder ranges for now
-const std::pair<unsigned, unsigned> symbols_range1(1,1);
-const std::pair<unsigned, unsigned> symbols_range2(1,1);
-const std::pair<unsigned, unsigned> symbols_range3(1,1);
-const std::pair<unsigned, unsigned> numbers_range(1, 1);
-const std::pair<unsigned, unsigned> lower_range(1, 1);
-const std::pair<unsigned, unsigned> upper_range(1, 1);
+const char_range symbols_range1(1,1);
+const char_range symbols_range2(1,1);
+const char_range symbols_range3(1,1);
+const char_range numbers_range(1, 1);
+const char_range lower_range(1, 1);
+const char_range upper_range(1, 1);
 
 class PWManager
 {
@@ -39,9 +34,14 @@ private:
   bool lower_;
   bool upper_;
   unsigned length_;
+  // After rolling for a char_set, access map to roll again to determine ascii char
+  map<unsigned, char_range_vector > char_set_map_;
   // functions
-  std::vector<unsigned> OptionsToRoll();
-
+  vector<unsigned> optionsToRoll();
+  int initCharRanges(); 
+  char randChar();
+  
+  
 public:
   int length(int length);
   bool symbols();
